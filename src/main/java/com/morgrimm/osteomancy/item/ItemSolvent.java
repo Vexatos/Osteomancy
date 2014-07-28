@@ -6,6 +6,7 @@ public class ItemSolvent extends ItemOst {
 
     public ItemSolvent() {
         super();
-        //this.setUnlocalizedName(Names.Items.SOLVENT);
+        this.setMaxStackSize(64);
+        this.setName(Names.Items.SOLVENT);
     }
 }
