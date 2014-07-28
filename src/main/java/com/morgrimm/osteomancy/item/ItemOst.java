@@ -1,5 +1,6 @@
 package com.morgrimm.osteomancy.item;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import com.morgrimm.osteomancy.creativetab.CreativeTabOsteomancy;
 import com.morgrimm.osteomancy.reference.Textures;
 import cpw.mods.fml.relauncher.Side;
@@ -8,12 +9,12 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class ItemOst extends Item {
+public class ItemOst extends Item{
 
     public ItemOst() {
         super();
         this.setMaxStackSize(1);
-        this.setCreativeTab(CreativeTabOsteomancy.OSTEOMANCY_TAB);
+        //this.setCreativeTab(CreativeTabOsteomancy.OSTEOMANCY_TAB);
     }
 
     @Override
