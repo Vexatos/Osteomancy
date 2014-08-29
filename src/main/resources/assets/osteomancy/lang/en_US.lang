@@ -1,2 +1,10 @@
 # Items
 item.osteomancy:fleshSolvent.name=Flesh Solvent
+item.osteomancy:cappucino.name=Kappucino
+item.osteomancy:corporealBloodOrb.name=Corporeal Blood Orb
+
+# Blocks
+tile.osteomancy:vatWall.name=Vat Wall
+
+#Keys
+keys.osteomancy.category=Osteomancy

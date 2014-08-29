@@ -1,9 +1,13 @@
 package com.morgrimm.osteomancy;
 
+import com.morgrimm.osteomancy.client.handler.KeyInputEventHandler;
 import com.morgrimm.osteomancy.handler.ConfigurationHandler;
 import com.morgrimm.osteomancy.init.ModBlocks;
 import com.morgrimm.osteomancy.init.ModItems;
+import com.morgrimm.osteomancy.network.PacketHandler;
 import com.morgrimm.osteomancy.proxy.IProxy;
+import com.morgrimm.osteomancy.rarities.Rarities;
+import com.morgrimm.osteomancy.recipes.Recipes;
 import com.morgrimm.osteomancy.reference.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -11,6 +15,8 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.common.util.EnumHelper;
 
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version=Reference.VERSION, guiFactory = Reference.GUI_FACTORY_CLASS, dependencies="required-after:AWWayofTime", canBeDeactivated = true)
 public class Osteomancy {
@@ -24,15 +30,22 @@ public class Osteomancy {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        PacketHandler.init();
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
+        proxy.registerKeybindings();
         ModItems.init();
         ModBlocks.init();
+        Rarities.init();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        // Register custom key bindings
+        FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
 
+        // Register custom recipes
+        Recipes.init();
     }
 
     @Mod.EventHandler

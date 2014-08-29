@@ -1,19 +1,16 @@
 package com.morgrimm.osteomancy.item;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import com.morgrimm.osteomancy.creativetab.CreativeTabOsteomancy;
-import com.morgrimm.osteomancy.reference.Reference;
 import com.morgrimm.osteomancy.reference.Textures;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemFood;
 
-public class ItemOst extends Item {
+public class ItemFoodOst extends ItemFood{
 
-    public ItemOst() {
-        super();
+    public ItemFoodOst(int healAmount, float saturationModifier, boolean isWolfsFavoriteFood) {
+        super(healAmount, saturationModifier, isWolfsFavoriteFood);
         this.setMaxStackSize(1);
         this.setCreativeTab(CreativeTabOsteomancy.OSTEOMANCY_TAB);
     }
@@ -29,4 +26,5 @@ public class ItemOst extends Item {
         this.setUnlocalizedName(Textures.RESOURCE_PREFIX + name);
         this.setTextureName(Textures.RESOURCE_PREFIX + name);
     }
+
 }
