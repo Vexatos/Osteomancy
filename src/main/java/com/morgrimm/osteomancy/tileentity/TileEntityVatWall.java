@@ -1,5 +1,6 @@
 package com.morgrimm.osteomancy.tileentity;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
@@ -23,15 +24,25 @@ public class TileEntityVatWall extends TileEntity {
         isMaster = bool;
     }
 
+    public int getMasterX() {
+        return masterX;
+    }
+
+    public int getMasterY() {
+        return masterY;
+    }
+
+    public int getMasterZ() {
+        return masterZ;
+    }
+
     @Override
     public void updateEntity() {
         super.updateEntity();
         if (!worldObj.isRemote) {
             if (hasMaster()) {
-                System.out.println("Has master!");
                 if (isMaster()) {
                     // Multiblock function goes here!
-                    System.out.println("MULTIBLOCK FORMED");
                 }
             } else if (checkMultiblock()) {
                 System.out.println("Multiblock detected!");
@@ -46,6 +57,8 @@ public class TileEntityVatWall extends TileEntity {
         compound.setInteger("masterX", masterX);
         compound.setInteger("masterY", masterY);
         compound.setInteger("masterZ", masterZ);
+        compound.setBoolean("hasMaster", hasMaster);
+        compound.setBoolean("isMaster", isMaster);
     }
 
     @Override
@@ -54,6 +67,8 @@ public class TileEntityVatWall extends TileEntity {
         masterX = compound.getInteger("masterX");
         masterY = compound.getInteger("masterY");
         masterZ = compound.getInteger("masterZ");
+        hasMaster = compound.getBoolean("hasMaster");
+        isMaster = compound.getBoolean("isMaster");
     }
 
     public void reset() {
@@ -76,16 +91,14 @@ public class TileEntityVatWall extends TileEntity {
     }
 
     public boolean checkMultiblock() {
-        System.out.println("Checking multiblock...");
         int i = 0;
         for (int x = xCoord - 1; x < (xCoord + 2); x++) {
             for (int y = yCoord; y < (yCoord + 3); y++) {
-                for (int z = zCoord; z < (zCoord + 2); z++) {
+                for (int z = zCoord - 1; z < (zCoord + 2); z++) {
                     TileEntity tile = worldObj.getTileEntity(x, y, z);
 
                     if (tile != null && (tile instanceof TileEntityVatWall)) {
                         if (this.isMaster()) {
-                            //  DEBUG System.out.println("This is the master block.");
                             if (((TileEntityVatWall) tile).hasMaster()) i++;
                         } else if (!((TileEntityVatWall) tile).hasMaster()) i++;
                     }
@@ -93,14 +106,13 @@ public class TileEntityVatWall extends TileEntity {
             }
         }
 
-        System.out.println("Vat walls: " + i);
-        return (i > 24); //&& (worldObj.isAirBlock(xCoord, yCoord + 1, zCoord));
+        return (i > 24) && (worldObj.isAirBlock(xCoord, yCoord + 1, zCoord))&& (worldObj.isAirBlock(xCoord, yCoord + 2, zCoord));
     }
 
     public void setupMultiblock() {
         for (int x = xCoord - 1; x < (xCoord + 2); x++) {
             for (int y = yCoord; y < (yCoord + 3); y++) {
-                for (int z = zCoord; z < (zCoord + 2); z++) {
+                for (int z = zCoord - 1; z < (zCoord + 2); z++) {
                     TileEntity tile = worldObj.getTileEntity(x, y, z);
 
                     boolean master = ((x == xCoord) && (y == yCoord) && (z == zCoord));
@@ -118,7 +130,7 @@ public class TileEntityVatWall extends TileEntity {
     public void resetMultiblock() {
         for (int x = xCoord - 1; x < (xCoord + 2); x++) {
             for (int y = yCoord; y < (yCoord + 3); y++) {
-                for (int z = zCoord; z < (zCoord + 2); z++) {
+                for (int z = zCoord - 1; z < (zCoord + 2); z++) {
                     TileEntity tile = worldObj.getTileEntity(x, y, z);
 
                     if (tile != null && (tile instanceof TileEntityVatWall)) {

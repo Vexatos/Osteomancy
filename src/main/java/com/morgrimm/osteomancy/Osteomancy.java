@@ -44,6 +44,9 @@ public class Osteomancy {
         // Register custom key bindings
         FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
 
+        // Register custom tile entities
+        proxy.registerTileEntities();
+
         // Register custom recipes
         Recipes.init();
     }
