@@ -10,4 +10,9 @@ public class ServerProxy extends CommonProxy{
     public void registerTileEntities() {
         //NOOP
     }
+
+    @Override
+    public void initRendering() {
+        //NOOP
+    }
 }

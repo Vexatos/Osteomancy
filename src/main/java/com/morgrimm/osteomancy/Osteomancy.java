@@ -47,6 +47,9 @@ public class Osteomancy {
         // Register custom tile entities
         proxy.registerTileEntities();
 
+        // Register custom rendering
+        proxy.initRendering();
+
         // Register custom recipes
         Recipes.init();
     }

@@ -1,0 +1,10 @@
+{
+	"block.vat.melt":
+	{
+		"category": "neutral",
+		"sounds":
+		[
+			"block.vat.melt"
+		]
+	}
+}

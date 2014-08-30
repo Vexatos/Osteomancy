@@ -5,6 +5,7 @@ item.osteomancy:corporealBloodOrb.name=Corporeal Blood Orb
 
 # Blocks
 tile.osteomancy:vatWall.name=Vat Wall
+tile.osteomancy:wardPlinth.name=Ward Plinth
 
 #Keys
 keys.osteomancy.category=Osteomancy
