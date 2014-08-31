@@ -11,11 +11,13 @@ public class ModItems {
     public static final ItemOst fleshSolvent = new ItemSolvent();
     public static final ItemFoodOst cappucino = new ItemCappucino(2, 5, false);
     public static final ItemOst corporealOrb = new ItemCorporealOrb();
+    public static final ItemOst bonePile = new ItemBonePile();
 
     public static void init() {
         // Register items here
         GameRegistry.registerItem(fleshSolvent, Names.Items.SOLVENT);
         GameRegistry.registerItem(cappucino, Names.Items.CAPPUCINO);
         GameRegistry.registerItem(corporealOrb, Names.Items.CORPOREAL_ORB);
+        GameRegistry.registerItem(bonePile, Names.Items.BONE_PILE);
     }
 }

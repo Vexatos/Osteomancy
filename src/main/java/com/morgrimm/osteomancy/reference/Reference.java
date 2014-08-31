@@ -8,4 +8,6 @@ public class Reference {
     public static final String CLIENT_PROXY_CLASS = "com.morgrimm.osteomancy.proxy.ClientProxy";
     public static final String SERVER_PROXY_CLASS = "com.morgrimm.osteomancy.ServerProxy";
     public static final String GUI_FACTORY_CLASS = "com.morgrimm.osteomancy.client.gui.GuiFactory";
+
+    public static final int VAT_DAMAGE = 1;
 }

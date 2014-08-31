@@ -3,6 +3,7 @@ package com.morgrimm.osteomancy;
 import com.morgrimm.osteomancy.client.handler.KeyInputEventHandler;
 import com.morgrimm.osteomancy.handler.ConfigurationHandler;
 import com.morgrimm.osteomancy.init.ModBlocks;
+import com.morgrimm.osteomancy.init.ModFluids;
 import com.morgrimm.osteomancy.init.ModItems;
 import com.morgrimm.osteomancy.network.PacketHandler;
 import com.morgrimm.osteomancy.proxy.IProxy;
@@ -35,6 +36,7 @@ public class Osteomancy {
 
         proxy.registerKeybindings();
         ModItems.init();
+        ModFluids.init();
         ModBlocks.init();
         Rarities.init();
     }

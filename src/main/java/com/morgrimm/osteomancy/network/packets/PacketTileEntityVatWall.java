@@ -1,7 +1,9 @@
 package com.morgrimm.osteomancy.network.packets;
 
+import com.morgrimm.osteomancy.tileentity.EnumVatWallTypes;
 import com.morgrimm.osteomancy.tileentity.TileEntityVatWall;
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -12,7 +14,8 @@ public class PacketTileEntityVatWall implements IMessage, IMessageHandler<Packet
 
     public byte orientation;
     public boolean isMaster, hasMaster;
-    public int masterX, masterY, masterZ, x, y, z;
+    public int masterX, masterY, masterZ, x, y, z, solventCount;
+    public EnumVatWallTypes type;
 
     public PacketTileEntityVatWall() {}
 
@@ -26,6 +29,7 @@ public class PacketTileEntityVatWall implements IMessage, IMessageHandler<Packet
         this.masterX = tile.getMasterX();
         this.masterY = tile.getMasterY();
         this.masterZ = tile.getMasterZ();
+        this.type = tile.getType();
     }
 
     @Override
@@ -39,6 +43,8 @@ public class PacketTileEntityVatWall implements IMessage, IMessageHandler<Packet
         this.masterX = buf.readInt();
         this.masterY = buf.readInt();
         this.masterZ = buf.readInt();
+        this.type = EnumVatWallTypes.valueOf(EnumVatWallTypes.class, ByteBufUtils.readUTF8String(buf).trim());
+        this.solventCount = buf.readInt();
     }
 
     @Override
@@ -52,6 +58,8 @@ public class PacketTileEntityVatWall implements IMessage, IMessageHandler<Packet
         buf.writeInt(masterX);
         buf.writeInt(masterY);
         buf.writeInt(masterZ);
+        ByteBufUtils.writeUTF8String(buf, type.name());
+        buf.writeInt(solventCount);
     }
 
     @Override
@@ -64,7 +72,11 @@ public class PacketTileEntityVatWall implements IMessage, IMessageHandler<Packet
             ((TileEntityVatWall) tile).setIsMaster(message.isMaster);
             ((TileEntityVatWall) tile).setHasMaster(message.hasMaster);
             ((TileEntityVatWall) tile).setMasterCoords(message.masterX, message.masterY, message.masterZ);
+            ((TileEntityVatWall) tile).setType(message.type);
+            ((TileEntityVatWall) tile).setSolventCount(message.solventCount);
         }
+
+        FMLClientHandler.instance().getClient().theWorld.markBlockForUpdate(message.x, message.y, message.z);
 
         return null;
     }

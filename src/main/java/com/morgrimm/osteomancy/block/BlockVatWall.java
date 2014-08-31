@@ -2,6 +2,7 @@ package com.morgrimm.osteomancy.block;
 
 import com.morgrimm.osteomancy.reference.Names;
 import com.morgrimm.osteomancy.reference.Reference;
+import com.morgrimm.osteomancy.tileentity.EnumVatWallTypes;
 import com.morgrimm.osteomancy.tileentity.TileEntityVatWall;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,6 +28,7 @@ public class BlockVatWall extends BlockOst implements ITileEntityProvider{
     public BlockVatWall (Material material) {
         super(material);
         this.setName(Names.Blocks.VAT_WALL);
+        this.setHardness(2);
         icons = new IIcon[10];
     }
 
@@ -57,16 +59,454 @@ public class BlockVatWall extends BlockOst implements ITileEntityProvider{
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
         TileEntityVatWall vat = (TileEntityVatWall) world.getTileEntity(x, y, z);
+        return getIconFromTypeAndSide(vat.getType(), side);
+    }
 
-        System.out.println("hasMaster: " + vat.hasMaster());
-        System.out.println("isMaster: " + vat.isMaster());
+    private IIcon getIconFromTypeAndSide(EnumVatWallTypes type, int side) {
+        switch (type) {
 
-        if (vat.hasMaster() || vat.isMaster()) {
+            // BOTTOM LAYER
+            case vatWallMaster: {
+                switch(side) {
+                    case 0: {
+                        return icons[0];
+                    }
 
-            return icons[0];
+                    case 1: {
+                        return icons[0];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallBotLeftCorner1: {
+                switch (side) {
+                    case 0: {
+                        return icons[2];
+                    }
+
+                    case 2: {
+                        return icons[5];
+                    }
+
+                    case 4: {
+                        return icons[4];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallMiddle1: {
+                switch (side) {
+                    case 0: {
+                        return icons[7];
+                    }
+
+                    case 4: {
+                        return icons[9];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallBotRightCorner1: {
+                switch (side) {
+                    case 0: {
+                        return icons[4];
+                    }
+
+                    case 3: {
+                        return icons[4];
+                    }
+
+                    case 4: {
+                        return icons[5];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallMiddle2: {
+                switch (side) {
+                    case 0: {
+                        return icons[6];
+                    }
+
+                    case 2: {
+                        return icons[9];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallMiddle3: {
+                switch (side) {
+                    case 0: {
+                        return icons[9];
+                    }
+
+                    case 3: {
+                        return icons[9];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallBotLeftCorner2: {
+                switch (side) {
+                    case 0: {
+                        return icons[3];
+                    }
+
+                    case 2: {
+                        return icons[4];
+                    }
+
+                    case 5: {
+                        return icons[5];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallMiddle4: {
+                switch (side) {
+                    case 0: {
+                        return icons[8];
+                    }
+
+                    case 5: {
+                        return icons[9];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            case vatWallBotRightCorner2: {
+                switch (side) {
+                    case 0: {
+                        return icons[5];
+                    }
+
+                    case 3: {
+                        return icons[5];
+                    }
+
+                    case 5: {
+                        return icons[4];
+                    }
+
+                    default: {
+                        return icons[0];
+                    }
+                }
+            }
+
+            // MIDDLE LAYER
+                case vatWallMiddleLeftCorner1: {
+                    switch (side) {
+                        case 2: {
+                            return icons[8];
+                        }
+
+                        case 4: {
+                            return icons[7];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                case vatWallMiddle5: {
+                    switch (side) {
+                        case 4: {
+                            return icons[1];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                case vatWallMiddleRightCorner1: {
+                    switch(side) {
+                        case 3: {
+                            return icons[7];
+                        }
+
+                        case 4: {
+                            return icons[8];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                case vatWallMiddle6: {
+                    switch (side) {
+                        case 2: {
+                            return icons[1];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                case vatWallMiddle7: {
+                    switch (side) {
+                        case 3: {
+                            return icons[1];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                case vatWallMiddleLeftCorner2: {
+                    switch (side) {
+                        case 2: {
+                            return icons[7];
+                        }
+
+                        case 5: {
+                            return icons[8];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                case vatWallMiddle8: {
+                    switch (side) {
+                        case 5: {
+                            return icons[1];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                case vatWallMiddleRightCorner2: {
+                    switch (side) {
+                        case 3: {
+                            return icons[8];
+                        }
+
+                        case 5: {
+                            return icons[7];
+                        }
+
+                        default: {
+                            return icons[0];
+                        }
+                    }
+                }
+
+                // TOP LAYER
+                    case vatWallTopLeftCorner1: {
+                        switch (side) {
+                            case 1: {
+                                return icons[2];
+                            }
+
+                            case 2: {
+                                return icons[3];
+                            }
+
+                            case 4: {
+                                return icons[2];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
+                    case vatWallMiddle9: {
+                        switch (side) {
+                            case 1: {
+                                return icons[7];
+                            }
+
+                            case 4: {
+                                return icons[6];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
+                    case vatWallTopRightCorner1: {
+                        switch (side) {
+                            case 1: {
+                                return icons[4];
+                            }
+
+                            case 3: {
+                                return icons[2];
+                            }
+
+                            case 4: {
+                                return icons[3];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
+                    case vatWallMiddle10: {
+                        switch (side) {
+                            case 1: {
+                                return icons[6];
+                            }
+
+                            case 2: {
+                                return icons[6];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
+                    case vatWallMiddle11: {
+                        switch (side) {
+                            case 1: {
+                                return icons[9];
+                            }
+
+                            case 3: {
+                                return icons[6];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
+                    case vatWallTopLeftCorner2: {
+                        switch (side) {
+                            case 1: {
+                                return icons[3];
+                            }
+
+                            case 2: {
+                                return icons[2];
+                            }
+
+                            case 5: {
+                                return icons[3];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
+                    case vatWallMiddle12: {
+                        switch (side) {
+                            case 1: {
+                                return icons[8];
+                            }
+
+                            case 5: {
+                                return icons[6];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
+                    case vatWallTopRightCorner2: {
+                        switch (side) {
+                            case 1: {
+                                return icons[5];
+                            }
+
+                            case 3: {
+                                return icons[3];
+                            }
+
+                            case 5: {
+                                return icons[2];
+                            }
+
+                            default: {
+                                return icons[0];
+                            }
+                        }
+                    }
+
         }
 
-        return icons[1];
+        return icons[0];
+    }
+
+    @Override
+    public IIcon getIcon(int side, int metadata) {
+        return icons[0];
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean canRenderInPass(int pass) {
+        return true;
+    }
+
+    @Override
+    public int getRenderBlockPass() {
+        return 1;
     }
 
     @Override
@@ -90,7 +530,6 @@ public class BlockVatWall extends BlockOst implements ITileEntityProvider{
             if (vat.hasMaster()) {
                 if (vat.isMaster()) {
                     if (!vat.checkMultiblock()) {
-                        System.out.println("Resetting multiblock...");
                         vat.resetMultiblock();
                     }
                 } else if (!vat.checkForMaster()) {
@@ -99,7 +538,6 @@ public class BlockVatWall extends BlockOst implements ITileEntityProvider{
                     TileEntityVatWall master = (TileEntityVatWall)world.getTileEntity(vat.getMasterX(), vat.getMasterY(), vat.getMasterZ());
 
                     if (!master.checkMultiblock()) {
-                        System.out.println("Resetting multiblock...");
                         master.resetMultiblock();
                     }
                 }
