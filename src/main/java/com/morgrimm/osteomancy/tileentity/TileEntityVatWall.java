@@ -42,6 +42,7 @@ public class TileEntityVatWall extends TileEntityOst {
     public TileEntityVatWall() {
         super();
         this.type = EnumVatWallTypes.vatWallNormal;
+        sound = null;
         soundResource = getSoundFor(Names.Sounds.VAT_BUBBLE);
     }
 
@@ -94,7 +95,10 @@ public class TileEntityVatWall extends TileEntityOst {
                     // Multiblock function goes here!
                     checkForEntities();
                     setAcidBlocks();
-                    updateSound();
+
+                    if (!worldObj.isRemote) {
+                        updateSound();
+                    }
                 }
             } else if (checkMultiblock()) {
                 setupMultiblock();
@@ -104,17 +108,22 @@ public class TileEntityVatWall extends TileEntityOst {
 
     @SideOnly(Side.CLIENT)
     private void updateSound() {
-        if (hasMaster() || isMaster()) {
-            if (solventCount > 0) {
-                if (sound != null) {
-                    sound.endPlaying();
-                    sound = null;
-                    System.out.println("Stopping sound!");
-                } else {
-                    sound = new LoopingTileEntitySound(soundResource, xCoord, yCoord, zCoord, 0.1f, 1.0f);
-                    //FMLClientHandler.instance().getClient().getSoundHandler().playSound(sound);
-                    System.out.println("Playing sound!");
-                }
+        if (isMaster()) {
+            System.out.println("Part of multiblock!!");
+            System.out.println("solventCount: " + solventCount);
+            System.out.println("sound == null: " + sound == null);
+
+            if (sound == null && solventCount > 0) {
+
+                sound = new LoopingTileEntitySound(soundResource, xCoord, yCoord, zCoord, 1.0f, 1.0f);
+                FMLClientHandler.instance().getClient().getSoundHandler().playSound(sound);
+                System.out.println("Playing sound!");
+
+            } else if (sound != null && solventCount == 0) {
+
+                sound.endPlaying();
+                sound = null;
+                System.out.println("Stopping sound!");
             }
         }
     }
@@ -270,6 +279,12 @@ public class TileEntityVatWall extends TileEntityOst {
         if (worldObj.getBlock(xCoord, yCoord + 2, zCoord) == ModFluids.Acid) {
             worldObj.setBlockToAir(xCoord, yCoord + 2, zCoord);
         }
+
+        if (!worldObj.isRemote) {
+            if (sound != null) {
+                sound.endPlaying();
+            }
+        }
     }
 
     public boolean isBlockAirOrAcid(int x, int y, int z) {
@@ -326,9 +341,10 @@ public class TileEntityVatWall extends TileEntityOst {
                 NBTHelper.setString(bonePile, "entityClassName", entity.getClass().getName());
 
                 entity.setDead();
+                worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, Names.Sounds.VAT_MOB_DEATH, 1.0F, 1.0F);
                 solventCount -= 2;
 
-                EntityItem bones = new EntityItem(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, bonePile);
+                EntityItem bones = new EntityItem(worldObj, xCoord + 0.5, yCoord + 2, zCoord + 0.5, bonePile);
                 bones.setVelocity(0, 0, 0);
 
                 worldObj.spawnEntityInWorld(bones);

@@ -1,3 +1,4 @@
 {
-	"block.vat.bubble": {"category": "ambient","sounds":["block/vat/bubble"]}
+	"block.vat.bubble": {"category": "ambient","sounds":["block/vat/bubble"]},
+	"block.vat.mob_death": {"category": "neutral","sounds":["block/vat/mob_death"]}
 }

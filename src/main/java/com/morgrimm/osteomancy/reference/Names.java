@@ -34,5 +34,6 @@ public final class Names {
         private static final String SOUND_LOCATION_PREFIX = Reference.MOD_ID.toLowerCase() + ":";
 
         public static final String VAT_BUBBLE = SOUND_LOCATION_PREFIX + "block.vat.bubble";
+        public static final String VAT_MOB_DEATH = SOUND_LOCATION_PREFIX + "block.vat.mob_death";
     }
 }
