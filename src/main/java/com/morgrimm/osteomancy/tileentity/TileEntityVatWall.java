@@ -69,6 +69,10 @@ public class TileEntityVatWall extends TileEntityOst {
         this.solventCount = count;
     }
 
+    public int getSolventCount() {
+        return solventCount;
+    }
+
     public int getMasterX() {
         return masterX;
     }
@@ -88,20 +92,21 @@ public class TileEntityVatWall extends TileEntityOst {
     @Override
     public void updateEntity() {
         super.updateEntity();
-            if (hasMaster()) {
-                if (isMaster()) {
-                    // Multiblock function goes here!
-                    checkForEntities();
+        if (worldObj.isRemote) {
+            updateSound();
+        }
 
-                    if (!worldObj.isRemote) {
-                        setAcidBlocks();
-                    }
+        // Otherwise do server stuff
 
-                    updateSound();
-                }
-            } else if (checkMultiblock()) {
-                setupMultiblock();
+        if (hasMaster()) {
+            if (isMaster()) {
+                // Multiblock function goes here!
+                checkForEntities();
+                setAcidBlocks();
             }
+        } else if (checkMultiblock()) {
+            setupMultiblock();
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -122,10 +127,12 @@ public class TileEntityVatWall extends TileEntityOst {
     @Override
     public void invalidate() {
         super.invalidate();
-        if(worldObj.isRemote) {
+
+        if (worldObj.isRemote) {
             updateSound();
         }
     }
+
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
@@ -200,15 +207,6 @@ public class TileEntityVatWall extends TileEntityOst {
     }
 
     public void setupMultiblock() {
-/*        for (int x = xCoord - 1; x < (xCoord + 2); x++) {
-            for (int y = yCoord; y < (yCoord + 3); y++) {
-                for (int z = zCoord - 1; z < (zCoord + 2); z++) {
-                }
-            }
-        }*/
-
-        // TEST CODE TO ALLOW FOR COHESIVE MULTIBLOCK TEXTURES
-
         // Bottom layer
         setupBlock(xCoord - 1, yCoord, zCoord - 1, EnumVatWallTypes.vatWallBotLeftCorner1);
         setupBlock(xCoord - 1, yCoord, zCoord, EnumVatWallTypes.vatWallMiddle1);
@@ -241,7 +239,6 @@ public class TileEntityVatWall extends TileEntityOst {
         setupBlock(xCoord + 1, yCoord + 2, zCoord - 1, EnumVatWallTypes.vatWallTopLeftCorner2);
         setupBlock(xCoord + 1, yCoord + 2, zCoord, EnumVatWallTypes.vatWallMiddle12);
         setupBlock(xCoord + 1, yCoord + 2, zCoord + 1, EnumVatWallTypes.vatWallTopRightCorner2);
-
     }
 
     private void setupBlock(int x, int y, int z, EnumVatWallTypes type) {
@@ -279,9 +276,12 @@ public class TileEntityVatWall extends TileEntityOst {
             worldObj.setBlockToAir(xCoord, yCoord + 2, zCoord);
         }
 
-        if (!worldObj.isRemote) {
+        if (worldObj.isRemote) {
+            System.out.println("ITS THE CLIENT");
             if (sound != null) {
                 sound.endPlaying();
+                sound = null;
+                System.out.println("Set sound to null");
             }
         }
     }

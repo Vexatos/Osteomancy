@@ -30,6 +30,7 @@ public class PacketTileEntityVatWall implements IMessage, IMessageHandler<Packet
         this.masterY = tile.getMasterY();
         this.masterZ = tile.getMasterZ();
         this.type = tile.getType();
+        this.solventCount = tile.getSolventCount();
     }
 
     @Override
