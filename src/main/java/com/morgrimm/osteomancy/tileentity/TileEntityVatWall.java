@@ -42,7 +42,6 @@ public class TileEntityVatWall extends TileEntityOst {
     public TileEntityVatWall() {
         super();
         this.type = EnumVatWallTypes.vatWallNormal;
-        sound = null;
         soundResource = getSoundFor(Names.Sounds.VAT_BUBBLE);
     }
 
@@ -89,42 +88,42 @@ public class TileEntityVatWall extends TileEntityOst {
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!worldObj.isRemote) {
             if (hasMaster()) {
                 if (isMaster()) {
                     // Multiblock function goes here!
                     checkForEntities();
-                    setAcidBlocks();
 
                     if (!worldObj.isRemote) {
-                        updateSound();
+                        setAcidBlocks();
                     }
+
+                    updateSound();
                 }
             } else if (checkMultiblock()) {
                 setupMultiblock();
             }
-        }
     }
 
     @SideOnly(Side.CLIENT)
     private void updateSound() {
         if (isMaster()) {
-            System.out.println("Part of multiblock!!");
-            System.out.println("solventCount: " + solventCount);
-            System.out.println("sound == null: " + sound == null);
-
-            if (sound == null && solventCount > 0) {
-
-                sound = new LoopingTileEntitySound(soundResource, xCoord, yCoord, zCoord, 1.0f, 1.0f);
-                FMLClientHandler.instance().getClient().getSoundHandler().playSound(sound);
-                System.out.println("Playing sound!");
-
-            } else if (sound != null && solventCount == 0) {
-
+            if((solventCount > 0) && !isInvalid()) {
+                if(sound == null) {
+                    sound = new LoopingTileEntitySound(soundResource, xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f, 1.0f, 1.0f);
+                    FMLClientHandler.instance().getClient().getSoundHandler().playSound(sound);
+                }
+            } else if(sound != null) {
                 sound.endPlaying();
                 sound = null;
-                System.out.println("Stopping sound!");
             }
+        }
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        if(worldObj.isRemote) {
+            updateSound();
         }
     }
 
