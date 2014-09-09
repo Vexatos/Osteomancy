@@ -1,0 +1,11 @@
+# Items
+item.osteomancy:fleshSolvent.name=Fleischlösungsmittel
+item.osteomancy:cappucino.name=Kappucino
+item.osteomancy:corporealBloodOrb.name=Korporealorb
+item.osteomancy:bonePile.name=Knochenhaufen
+# Blocks
+tile.osteomancy:vatWall.name=Bottichwand
+tile.osteomancy:wardPlinth.name=Bannplinthe
+tile.osteomancy:boneBlock.name=Knochenblock
+#Keys
+keys.osteomancy.category=Osteomancy
